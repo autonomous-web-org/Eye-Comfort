@@ -21,6 +21,8 @@ Use this hook to adjust the brightness of a page/element. you can use the follow
 ## Installation
 ```terminal
 npm install eye_comfort
+<!-- or -->
+<script src="https://cdn.jsdelivr.net/npm/eye_comfort@1.0.1/index.min.js"></script>
 ```
 
 
@@ -31,6 +33,8 @@ import { useNightMode, useBrightness } from "eye_comfort";
 import { useNightMode } from "eye_comfort";
 // or
 import { useBrightness } from "eye_comfort";
+// or
+<script src="https://cdn.jsdelivr.net/npm/eye_comfort@1.0.1/index.min.js"></script>
 ```
 
 
