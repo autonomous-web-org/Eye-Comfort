@@ -1,4 +1,4 @@
-function useNightMode() {
+function clsNightMode() {
     let enabled = false;
 
     return ({ element=document.querySelector(":root"), defaultFilter="" }={}) => {
@@ -9,14 +9,14 @@ function useNightMode() {
     }
 }
 
-function useBrightness() {
+function clsBrightness() {
 
     return ({ element=document.querySelector(":root"), value=1 }={}) => {
         element.style.setProperty('filter', `brightness(${value})`);
     }
 }
 
-export { useNightMode, useBrightness };
+export { clsNightMode, clsBrightness };
 
 // export default EyeComfortComponent({
 //     title="", className="", handleClick=()=>{}, content="Eye Comfort",

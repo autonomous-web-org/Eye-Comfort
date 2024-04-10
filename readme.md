@@ -3,19 +3,16 @@ The 'Eye Comfort' Library is designed to improve user experience by providing fu
 
 
 ## Features
-- Night Mode hook (useNightMode)
-- Brightness hook (useBrightness)
+- Night Mode hook (clsNightMode)
+- Brightness hook (clsBrightness)
 - Font Size Adjustment [in progress]
 
 
 ## Function & Options
-### useNightMode({options})
-Use this hook to create an eye comfort/night light mode for a page/element. you can use the following options:
-  - element: the element on which you want to apply it. default is the whole page (:root).
-### useBrightness({options})
-Use this hook to adjust the brightness of a page/element. you can use the following options:
-  - element: the element on which you want to apply it. default is whole page (:root).
-  - value: the value could be in decimals (0 to 1) or in percentage (0% to 100%).
+### clsNightMode()
+Use this to initalize an eye comfort/night light mode for a page/element. It returns a function that can be used to create the effect.
+### clsBrightness()
+Use this, to initalize brightness functionality, to adjust the brightness of a page/element. It returns a function that can be used to create the effect.
 
 
 ## Installation
@@ -28,20 +25,21 @@ npm install eye_comfort
 
 ## Initialize
 ```js
-import { useNightMode, useBrightness } from "eye_comfort";
+import { clsNightMode, clsBrightness } from "eye_comfort";
 // or
-import { useNightMode } from "eye_comfort";
+import { clsNightMode } from "eye_comfort";
 // or
-import { useBrightness } from "eye_comfort";
+import { clsBrightness } from "eye_comfort";
 // or
 <script src="https://cdn.jsdelivr.net/npm/eye_comfort@1.0.1/index.min.js"></script>
 ```
 
 
 ## Usage
+<a href="#options">Scroll Down</a> for the complete list of options, to consumed by returned functions
 ```js
-const nightmode = useNightMode();
-const brightness = useBrightness();
+const nightmode = clsNightMode();
+const brightness = clsBrightness();
 
 // whole page
 nightmode();
@@ -53,9 +51,52 @@ brightness({ element: document.querySelector("#element"), value: .7 }); // you c
 ```
 
 
+## Options
+### Night Mode
+<table>
+  <thead>
+    <tr>
+      <td>Option</td>
+      <td>Description</td>
+      <td>Default</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>element</td>
+      <td>the element on which you want to apply the effect</td>
+      <td>:root (whole page)</td>
+    </tr>
+  </tbody>
+</table>
+
+### Brightness
+<table>
+  <thead>
+    <tr>
+      <td>Option</td>
+      <td>Description</td>
+      <td>Default</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>element</td>
+      <td>the element on which you want to apply the effect</td>
+      <td>:root (whole page)</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>the intensity of the filter, it could be in decimals (0 to 1) or in percentage (0% to 100%)</td>
+      <td>1 (bright)</td>
+    </tr>
+  </tbody>
+</table>
+
+
 ## Fun Facts
 - _It uses <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter">CSS filtes</a> behind the hood so, You don't have to worry much about the site's performance or ranking issues_
-- _Though these hooks have minimal state logic, they do not use react state hook and are not bound by any framework rules. This gives you the freedom to use them anywhere and any way you like, inside other hooks or in a script tag._ :wink:
+- _It is created using plain JS thus, not bound by any framework rules. This gives you the freedom to use them anywhere and any way you like, inside other hooks or in a script tag._ :wink:
 
 
 You can play with these features, applied to our website at https://www.autonomousweb.org/
