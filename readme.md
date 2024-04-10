@@ -96,7 +96,7 @@ brightness({ element: document.querySelector("#element"), value: .7 }); // you c
 
 ## Fun Facts
 - _It uses <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter">CSS filtes</a> behind the hood so, You don't have to worry much about the site's performance or ranking issues_
-- _It is created using plain JS thus, not bound by any framework rules. This gives you the freedom to use them anywhere and any way you like, inside other hooks or in a script tag._ :wink:
+- _It is created using plain JavaScript, thus not bound by any framework rules. This gives you the freedom to use it anywhere and in any way you like, whether inside other hooks or in a script tag._ :wink:
 
 
 You can play with these features, applied to our website at https://www.autonomousweb.org/
