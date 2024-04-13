@@ -48,17 +48,28 @@ brightness({value: .7}); // you can also use percentage for eg. 70%
 // specific element
 nightmode({ element: document.querySelector("#element") });
 brightness({ element: document.querySelector("#element"), value: .7 }); // you can also use percentage for eg. 70%
+
+// the best way, to use in react or other lib. that reinitiates local variable on state change, is to use it with a hook that can memoize/cache the output
+const nightmode = useMemo(clsNightMode, []);
+const brightness = useMemo(clsBrightness, []);
+
+// reset to default when disabled
+nightmode({ original: "brightness(.4)" });
+
+// include another filter as well
+brightness({ include: "blur(10px)" });
 ```
 
 
 ## Options
 ### Night Mode
+This function is used to toggle night mode effect on a page, it *returns a boolean (enabled or not)*.
 <table>
   <thead>
     <tr>
       <td>Option</td>
       <td>Description</td>
-      <td>Default</td>
+      <td>Default Value</td>
     </tr>
   </thead>
   <tbody>
@@ -67,10 +78,21 @@ brightness({ element: document.querySelector("#element"), value: .7 }); // you c
       <td>the element on which you want to apply the effect</td>
       <td>:root (whole page)</td>
     </tr>
+    <tr>
+      <td>original</td>
+      <td>the original value, i.e. value that should be applied on reset / when disabled</td>
+      <td>empty string</td>
+    </tr>
+    <tr>
+      <td>include</td>
+      <td>the value to be included along with the effect, when it's enabled</td>
+      <td>empty string</td>
+    </tr>
   </tbody>
 </table>
 
 ### Brightness
+This function is used to adjust brightness of a page, it *returns nothing*.
 <table>
   <thead>
     <tr>
@@ -87,8 +109,15 @@ brightness({ element: document.querySelector("#element"), value: .7 }); // you c
     </tr>
     <tr>
       <td>value</td>
-      <td>the intensity of the filter, it could be in decimals (0 to 1) or in percentage (0% to 100%)</td>
-      <td>1 (bright)</td>
+      <td>
+      the intensity of the filter, it could be in decimals (0 to 1) or in percentage (0% to 100%)
+      </td>
+      <td>0 (dim) | 1 (bright)</td>
+    </tr>
+    <tr>
+      <td>include</td>
+      <td>the value to be included along with the effect</td>
+      <td>empty string</td>
     </tr>
   </tbody>
 </table>
