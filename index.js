@@ -1,4 +1,5 @@
-function clsNightMode(enabled=false) {
+function clsNightMode() {
+    let enabled=false;
 
     return ({ element=document.querySelector(":root"), original="", include="" }={}) => {
         !enabled && element.style.setProperty("filter", `brightness(.7) sepia(1) ${include}`);
