@@ -1,6 +1,6 @@
 {
   "name": "eye_comfort",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "The 'Eye Comfort' Library is designed to improve user experience by providing functionalities aimed at reducing eye strain and promoting comfortable viewing. This hook can be easily integrated into any JS application to enable features such as eye comfort mode, font size adjustments, and screen brightness control. By incorporating this library, developers can enhance the accessibility and usability of their applications, ensuring that users can comfortably interact with the interface for extended periods without experiencing discomfort or fatigue.",
   "main": "index.js",
   "scripts": {
