@@ -33,6 +33,13 @@ import { clsBrightness } from "eye_comfort";
 // or
 <script src="https://cdn.jsdelivr.net/npm/eye_comfort@1.0.1/index.min.js"></script>
 ```
+> [!NOTE]
+> In case you get any issue while using it with NextJs try adding this rule in the next.config
+> 
+> ```js
+> { ... transpilePackages: ['eye_comfort'], ...}
+> ```
+
 
 
 ## Usage
@@ -124,7 +131,7 @@ This function is used to adjust brightness of a page, it *returns nothing*.
 
 
 ## Fun Facts
-- _It uses <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter">CSS filtes</a> behind the hood so, You don't have to worry much about the site's performance or ranking issues_
+- _It uses <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter">CSS filtes</a> behind the hood so, You don't have to worry about the site's performance or ranking issues_
 - _It is created using plain JavaScript, thus not bound by any framework rules. This gives you the freedom to use it anywhere and in any way you like, whether inside other hooks or in a script tag._ :wink:
 
 
