@@ -34,7 +34,7 @@ import { clsBrightness } from "eye_comfort";
 <script src="https://cdn.jsdelivr.net/npm/eye_comfort@1.0.1/index.min.js"></script>
 ```
 > [!NOTE]
-> In case you get any issue while using it with NextJs try adding this rule in the next.config
+> In case you get the "export error" while using it with NextJS try adding this rule in the next.config
 > 
 > ```js
 > { ... transpilePackages: ['eye_comfort'], ...}
