@@ -49,22 +49,22 @@ const nightmode = clsNightMode();
 const brightness = clsBrightness();
 
 // whole page
-nightmode();
-brightness({value: .7}); // you can also use percentage for eg. 70%
+nightmode.apply();
+brightness.apply({value: .7}); // you can also use percentage for eg. 70%
 
 // specific element
-nightmode({ element: document.querySelector("#element") });
-brightness({ element: document.querySelector("#element"), value: .7 }); // you can also use percentage for eg. 70%
+nightmode.apply({ element: document.querySelector("#element") });
+brightness.apply({ element: document.querySelector("#element"), value: .7 }); // you can also use percentage for eg. 70%
 
 // the best way, to use in react or other lib. that reinitiates local variable on state change, is to use it with a hook that can memoize/cache the output
 const nightmode = useMemo(clsNightMode, []);
 const brightness = useMemo(clsBrightness, []);
 
 // reset to default when disabled
-nightmode({ original: "brightness(.4)" });
+nightmode.reset();
 
 // include another filter as well
-brightness({ include: "blur(10px)" });
+brightness.apply({ include: "blur(10px)" });
 ```
 
 
@@ -84,11 +84,6 @@ This function is used to toggle night mode effect on a page, it *returns a boole
       <td>element</td>
       <td>the element on which you want to apply the effect</td>
       <td>:root (whole page)</td>
-    </tr>
-    <tr>
-      <td>original</td>
-      <td>the original value, i.e. value that should be applied on reset / when disabled</td>
-      <td>empty string</td>
     </tr>
     <tr>
       <td>include</td>

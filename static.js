@@ -1,19 +1,54 @@
 function clsNightMode() {
-    let enabled=false;
+  let enabled = false;
+  let originalFilters = "";
 
-    return ({ element=document.querySelector(":root"), original="", include="" }={}) => {
-        !enabled && element.style.setProperty("filter", `brightness(.6) sepia(1) ${include}`);
-        enabled && element.style.setProperty("filter", original);
+  // apply: toggles night mode based on current state
+  const apply = ({ element = document.querySelector(":root"), include = "" } = {}) => {
+    if (enabled) return 0;
 
-        enabled = !enabled;
+    originalFilters = window.getComputedStyle(element).getPropertyValue("filter");
+    element.style.setProperty("filter", `${originalFilters} brightness(.6) sepia(1) ${include}`);
 
-        return enabled;
-    }
+    enabled = !enabled;
+    return enabled;
+  };
+
+  // reset: removes any filter property and sets "enabled" back to false
+  const reset = ({ element = document.querySelector(":root") } = {}) => {
+    if (!enabled) return 0;
+
+    element.style.setProperty("filter", originalFilters);
+
+    enabled = !enabled;
+    return enabled;
+  };
+
+  return {
+    apply,
+    reset
+  };
 }
 
 function clsBrightness() {
+  let originalFilters = "";
 
-    return ({ element=document.querySelector(":root"), value=1, include="" }={}) => {
-        element.style.setProperty('filter', `brightness(${value}) ${include}`);
-    }
+  // apply: sets a brightness filter
+  const apply = ({ element = document.querySelector(":root"), value = 1, include = "" } = {}) => {
+    originalFilters = window.getComputedStyle(element).getPropertyValue("filter");
+    element.style.setProperty("filter", `${originalFilters} brightness(${value}) ${include}`);
+
+    return true;
+  };
+
+  // reset: removes the brightness filter
+  const reset = ({ element = document.querySelector(":root") } = {}) => {
+    element.style.setProperty("filter", originalFilters);
+
+    return true;
+  };
+
+  return {
+    apply,
+    reset
+  };
 }
