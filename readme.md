@@ -1,100 +1,112 @@
 # Eye Comfort
-The 'Eye Comfort' Library is designed to improve user experience by providing functionalities aimed at reducing eye strain and promoting comfortable viewing. It can be easily integrated into any JS application to enable features such as eye comfort mode, font size adjustments, and screen brightness control. By incorporating this library, developers can enhance the accessibility and usability of their applications, ensuring that users can comfortably interact with the interface for extended periods without experiencing discomfort or fatigue.
 
+The **Eye Comfort** library is designed to improve user experience by reducing eye strain and making long viewing sessions more comfortable. It can be integrated into any JavaScript application to enable night/eye-comfort mode, screen brightness adjustments, and (soon) font-size controls, helping users stay comfortable during extended use.
+
+Under the hood it relies on the CSS `filter` property, so visual changes are hardware-accelerated and generally safe for performance in modern browsers.
 
 ## Features
-- Night Mode (clsNightMode)
-- Brightness (clsBrightness)
-- Font Size Adjustment [in progress]
 
+- Night Mode (`clsNightMode`) – configurable dim + warm (sepia) effect
+- Brightness (`clsBrightness`) – global or per-element brightness control
+- Font Size Adjustment – *in progress*
 
 ## Function & Options
-### clsNightMode()
-Use this to initalize an eye comfort/night light mode for a page/element. It returns a function that can be used to create the effect.
-### clsBrightness()
-Use this, to initalize brightness functionality, to adjust the brightness of a page/element. It returns a function that can be used to create the effect.
 
+### `clsNightMode()`
+
+Initializes an eye-comfort / night-light controller for a page or specific element.
+Returns an object with `apply()` and `reset()` methods you can call multiple times.
+
+### `clsBrightness()`
+
+Initializes a brightness controller for a page or specific element.
+Returns an object with `apply()` and `reset()` methods for adjusting and restoring brightness.
+
+---
 
 ## Installation
-```terminal
+
+```bash
 npm install eye_comfort
-<!-- or -->
-<script src="https://cdn.jsdelivr.net/npm/eye_comfort@1.0.1/index.min.js"></script>
 ```
 
+or via CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/eye_comfort@1.0.1/index.min.js"></script>
+```
+---
 
 ## Initialize
+
 ```js
 import { clsNightMode, clsBrightness } from "eye_comfort";
 // or
 import { clsNightMode } from "eye_comfort";
 // or
 import { clsBrightness } from "eye_comfort";
-// or
-<script src="https://cdn.jsdelivr.net/npm/eye_comfort@1.0.1/index.min.js"></script>
 ```
+
+
 > [!NOTE]
-> In case you get the "export error" while using it with NextJS try adding this rule in the next.config
-> 
-> ```js
-> { ... transpilePackages: ['eye_comfort'], ...}
+> If you see an "export" error in Next.js, add the package to `transpilePackages` in `next.config.js`:
+> ```
+> const nextConfig = {
+>   // ...
+>   transpilePackages: ["eye_comfort"],
+> };
+> export default nextConfig;
 > ```
 
-
+---
 
 ## Usage
-<a href="#options">Scroll Down</a> for the complete list of options, to consumed by returned functions
+
+<a href="#options">Scroll down</a> for the full list of options.
 ```js
 const nightmode = clsNightMode();
 const brightness = clsBrightness();
 
-// whole page
-nightmode.apply();
-brightness.apply({value: .7}); // you can also use percentage for eg. 70%
+// Whole page (defaults)
+nightmode.apply(); // sepia(1), brightness(0.6)
+brightness.apply({ value: 0.7 }); // 70% brightness (0.7)
 
-// specific element
-nightmode.apply({ element: document.querySelector("#element") });
-brightness.apply({ element: document.querySelector("#element"), value: .7 }); // you can also use percentage for eg. 70%
+// Specific element
+const box = document.querySelector("#element");
 
-// the best way, to use in react or other lib. that reinitiates local variable on state change, is to use it with a hook that can memoize/cache the output
-const nightmode = useMemo(clsNightMode, []);
-const brightness = useMemo(clsBrightness, []);
+nightmode.apply({
+element: box,
+value: 0.8, // 80% sepia
+dim: 0.5, // 50% brightness
+});
 
-// reset to default when disabled
+brightness.apply({
+element: box,
+value: 0.7, // 70% brightness (use 0.7 instead of 70)
+});
+
+// Recommended for React (and similar) to avoid re-creating controllers on every render
+const nightmodeMemo = useMemo(clsNightMode, []);
+const brightnessMemo = useMemo(clsBrightness, []);
+
+// Reset to original styles
 nightmode.reset();
+brightness.reset();
 
-// include another filter as well
-brightness.apply({ include: "blur(10px)" });
+// Include additional filters
+brightness.apply({
+value: 0.8,
+include: "blur(10px)",
+});
 ```
-
+---
 
 ## Options
-### Night Mode
-This function is used to toggle night mode effect on a page, it *returns a boolean (enabled or not)*.
-<table>
-  <thead>
-    <tr>
-      <td>Option</td>
-      <td>Description</td>
-      <td>Default Value</td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>element</td>
-      <td>the element on which you want to apply the effect</td>
-      <td>:root (whole page)</td>
-    </tr>
-    <tr>
-      <td>include</td>
-      <td>the value to be included along with the effect, when it's enabled</td>
-      <td>empty string</td>
-    </tr>
-  </tbody>
-</table>
 
-### Brightness
-This function is used to adjust brightness of a page, it *returns nothing*.
+### Night Mode (`clsNightMode().apply`)
+
+Applies a night/comfort mode effect. Returns `true` when applied successfully.
+
 <table>
   <thead>
     <tr>
@@ -106,28 +118,73 @@ This function is used to adjust brightness of a page, it *returns nothing*.
   <tbody>
     <tr>
       <td>element</td>
-      <td>the element on which you want to apply the effect</td>
+      <td>The element to which the effect is applied.</td>
+      <td>:root (whole page)</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>Sepia intensity from 0 (off) to 1 (full warm tint).</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>dim</td>
+      <td>Brightness level; 1 is normal, values below 1 are darker.</td>
+      <td>0.6 (60% brightness)</td>
+    </tr>
+    <tr>
+      <td>include</td>
+      <td>Additional CSS filters to append (e.g. "blur(5px)").</td>
+      <td>Empty string</td>
+    </tr>
+  </tbody>
+</table>
+
+`reset({ element })` restores the original `filter` value of that element and returns `true` when it succeeds.
+
+---
+
+### Brightness (`clsBrightness().apply`)
+
+Adjusts brightness on top of the element’s existing filters. Returns `true` when applied successfully.
+
+<table>
+  <thead>
+    <tr>
+      <td>Option</td>
+      <td>Description</td>
+      <td>Default</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>>element</td>
+      <td>The element on which you want to adjust brightness.</td>
       <td>:root (whole page)</td>
     </tr>
     <tr>
       <td>value</td>
       <td>
-      the intensity of the filter, it could be in decimals (0 to 1) or in percentage (0% to 100%)
+        Brightness level: 1 is normal, values below 1 dim the page, values above 1 make it brighter.
+        For a "percentage-style" mental model, use decimals: e.g. 0.7 = 70%.
       </td>
-      <td>0 (dim) | 1 (bright)</td>
+      <td>1</td>
     </tr>
     <tr>
       <td>include</td>
-      <td>the value to be included along with the effect</td>
-      <td>empty string</td>
+      <td>Extra CSS filters to append along with brightness.</td>
+      <td>Empty string</td>
     </tr>
   </tbody>
 </table>
 
+`reset({ element })` restores the original `filter` state of that element and returns `true`.
+
+---
 
 ## Fun Facts
-- _It uses <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter">CSS filtes</a> behind the scene so, You don't have to worry about the site's performance or ranking issues_
-- _It is created using plain JavaScript, thus not bound by any framework rules. This gives you the freedom to use it anywhere and in any way you like, whether inside other hooks or in a script tag._ :wink:
 
+- It uses the native CSS `filter` pipeline (brightness, sepia, etc.), so it plays nicely with modern browsers and keeps logic simple.
+- It is written in plain JavaScript, so it is framework-agnostic and can be used in React, Vue, Svelte, vanilla `<script>` tags, or any other setup you prefer.
 
-You can play with these features, applied to our website at https://www.autonomousweb.org/
+This library is inspired by and shares the core logic of the **Eye Comfort** browser extension, which you can check out here:
+[**Eye Comfort - Chrome Web Store**](https://chromewebstore.google.com/detail/eye-comfort/dghfihdmhcceodeojmakgjjocfojecao)
